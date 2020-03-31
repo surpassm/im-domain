@@ -1,4 +1,4 @@
-package com.github.surpassm.iot.gateway;
+package com.github.surpassm.im.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-public class IotGatewayApplication {
+public class ImGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(IotGatewayApplication.class, args);
+        SpringApplication.run(ImGatewayApplication.class, args);
     }
 
 }
