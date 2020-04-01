@@ -43,8 +43,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         //实际上是多余的，只要handler被移除，client会自动的把对应的channel移除掉
         //每一而channel都会有一个长ID与短ID
         //一开始channel就有了，系统会自动分配一串很长的字符串作为唯一的ID，如果使用asLongText()获取的ID是唯一的，asShortText()会把当前ID进行精简，精简过后可能会有重复
-        System.out.println("channel的长ID："+ctx.channel().id().asLongText());
-        System.out.println("channel的短ID："+ctx.channel().id().asShortText());
+        System.out.println("channel的长ID：" + ctx.channel().id().asLongText());
+        System.out.println("channel的短ID：" + ctx.channel().id().asShortText());
     }
 
 }
