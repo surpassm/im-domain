@@ -9,6 +9,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +59,17 @@ public class ChatHandler extends SimpleChannelInboundHandler<Object> {
         } else if (msg instanceof WebSocketFrame) {
             handlerWebSocketFrame(ctx, (WebSocketFrame) msg);
         }
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof IdleStateEvent) {
+            IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
+            if (idleStateEvent.state() == IdleState.READER_IDLE) {
+                log.info("定时检测客户端端是否存活");
+            }
+        }
+        super.userEventTriggered(ctx, evt);
     }
 
     private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) {
