@@ -6,7 +6,6 @@ package com.github.surpassm.im.server.pojo;
 
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.mqtt.MqttPublishMessage;
 
 import java.io.Serializable;
 
