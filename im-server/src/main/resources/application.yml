@@ -14,7 +14,7 @@ spring:
       transport:
         dashboard: localhost:8080
         port: 8721
-  mqtt:
+  im:
     server:
       id: im-broker-01
       # 端口号

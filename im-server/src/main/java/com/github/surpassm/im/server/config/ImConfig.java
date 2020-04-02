@@ -16,7 +16,7 @@ public class ImConfig {
     @AllArgsConstructor
     @NoArgsConstructor
     @Component
-    @ConfigurationProperties(prefix = "spring.mqtt.server")
+    @ConfigurationProperties(prefix = "spring.im.server")
     public static class ImServerConfig{
 		/**
 		 * Broker唯一标识
@@ -109,7 +109,7 @@ public class ImConfig {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Component
-	@ConfigurationProperties(prefix = "spring.mqtt.server.cache")
+	@ConfigurationProperties(prefix = "spring.im.server.cache")
 	public static class IgniteProperties{
 		/**
 		 * 持久化缓存内存初始化大小(MB), 默认值: 64
