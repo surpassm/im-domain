@@ -37,6 +37,7 @@ public class Connect {
 	}
 
 	public void processConnect(Channel channel, WebSocketFrame msg) {
+
 	}
 
 }

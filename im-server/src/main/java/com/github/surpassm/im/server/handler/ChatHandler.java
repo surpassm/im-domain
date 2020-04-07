@@ -1,6 +1,7 @@
 package com.github.surpassm.im.server.handler;
 
 import com.github.surpassm.im.server.core.ProtocolProcess;
+import com.github.surpassm.im.server.pojo.SessionStore;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -34,27 +35,22 @@ public class ChatHandler extends SimpleChannelInboundHandler<Object> {
         this.protocolProcess = protocolProcess;
     }
 
-    /**
-     * 当客户端连接服务端（或者是打开连接之后）
-     */
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        //获取客户端所对应的channel，添加到一个管理的容器中即可
+        //调用鉴权判断
+        String asLongText = ctx.channel().id().asLongText();
+        SessionStore store = new SessionStore(asLongText,ctx.channel(),true,null);
+        protocolProcess.store().put(asLongText,store);
     }
 
-    /**
-     * 客户端断开
-     */
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("channel的长ID：" + ctx.channel().id().asLongText());
-        System.out.println("channel的短ID：" + ctx.channel().id().asShortText());
+        protocolProcess.store().remove(ctx.channel().id().asLongText());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof FullHttpRequest) {
-            //以http请求形式接入，但是走的是websocket
             handleHttpRequest(ctx, (FullHttpRequest) msg);
         } else if (msg instanceof WebSocketFrame) {
             handlerWebSocketFrame(ctx, (WebSocketFrame) msg);

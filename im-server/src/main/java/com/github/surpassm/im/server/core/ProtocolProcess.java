@@ -28,4 +28,7 @@ public class ProtocolProcess {
         }
         return connect;
     }
+    public ISessionStoreService store(){
+        return sessionStoreService;
+    }
 }

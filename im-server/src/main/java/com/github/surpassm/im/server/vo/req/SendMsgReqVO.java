@@ -1,6 +1,8 @@
 package com.github.surpassm.im.server.vo.req;
 
 
+import lombok.Data;
+
 /**
  * @author Administrator
  */
