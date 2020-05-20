@@ -2,6 +2,7 @@ package com.github.surpassm.im.server.exception;
 
 import com.github.surpassm.im.server.common.Result;
 import com.github.surpassm.im.server.common.ResultCode;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -68,6 +69,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			printlnLog("NullPointerException", stackTraceElement);
 		}
 		return new Result(ResultCode.SYSTEM_INNER_ERROR.getCode(), ResultCode.SYSTEM_INNER_ERROR.getMsg(), exception.getMessage());
+	}
+
+	@ExceptionHandler(FeignException.class)
+	public Result FeignExceptionHandler(HttpServletRequest request, final Exception e, HttpServletResponse response) {
+		response.setStatus(HttpStatus.OK.value());
+		FeignException exception = (FeignException) e;
+		if (exception.getStackTrace().length > 0) {
+			StackTraceElement stackTraceElement = exception.getStackTrace()[0];
+			printlnLog("FeignException", stackTraceElement);
+		}
+		return new Result(ResultCode.INTERFACE_INNER_INVOKE_ERROR.getCode(), ResultCode.INTERFACE_INNER_INVOKE_ERROR.getMsg(),exception.getMessage());
 	}
 
 	/**
