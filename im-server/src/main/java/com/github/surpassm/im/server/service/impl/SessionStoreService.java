@@ -50,4 +50,9 @@ public class SessionStoreService implements ISessionStoreService {
     public void remove(String clientId) {
         sessionCache.remove(clientId);
     }
+
+    @Override
+    public Map<String, SessionStore> getAll() {
+        return sessionCache;
+    }
 }

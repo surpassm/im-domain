@@ -1,5 +1,6 @@
 package com.github.surpassm.im.server.service;
 
+
 import com.github.surpassm.im.server.vo.req.SendMsgReqVO;
 
 /**
@@ -9,9 +10,7 @@ import com.github.surpassm.im.server.vo.req.SendMsgReqVO;
  * Description
  */
 public interface ISendMsgServer {
-    /**
-     * 向服务端发送消息
-     * @param sendMsgReqVO
-     */
     void sendMsg(SendMsgReqVO sendMsgReqVO);
+
+    void sendPersonMsg(SendMsgReqVO sendMsgReqVO);
 }

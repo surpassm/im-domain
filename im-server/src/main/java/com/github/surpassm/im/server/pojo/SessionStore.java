@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 /**
  * 会话存储
- * @author Administrator
  */
 public class SessionStore implements Serializable {
 

@@ -30,3 +30,12 @@ spring:
       # 组播地址
       multicast-group: 239.255.255.255
 
+
+swagger:
+  enabled: true
+  title: "消息 API"
+  authorization:
+    key-name: Authorization #head对应的key
+    auth-regex: ^(?!auth).*$ #url地址中携带auth将不加入swagger token验证
+  base-package: com.github.surpassm.im.server.controller
+  description: "说明"

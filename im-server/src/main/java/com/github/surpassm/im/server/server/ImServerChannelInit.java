@@ -1,9 +1,9 @@
 package com.github.surpassm.im.server.server;
 
 import com.github.surpassm.im.server.config.ImConfig;
-import com.github.surpassm.im.server.core.ProtocolProcess;
 import com.github.surpassm.im.server.handler.ChatHandler;
 import com.github.surpassm.im.server.handler.HttpRequestHandler;
+import com.github.surpassm.im.server.protocol.ProtocolProcess;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -39,12 +39,13 @@ public class ImServerChannelInit extends ChannelInitializer<SocketChannel> {
                 .addLast("http-codec",new HttpServerCodec())
                 .addLast("http-chunked",new ChunkedWriteHandler())
                 .addLast("aggregator",new HttpObjectAggregator(2048 * 64))
-                .addLast(new HttpRequestHandler())
+                .addLast(new HttpRequestHandler(protocolProcess))
                 .addLast(new WebSocketServerProtocolHandler("/ws"))
-
-
                 .addLast(new ChatHandler(protocolProcess));
-        ;
+
+
+
+
 
     }
 }

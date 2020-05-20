@@ -1,31 +1,31 @@
 package com.github.surpassm.im.server.vo.req;
 
 
-import lombok.Data;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author Administrator
  */
 public class SendMsgReqVO {
+    @ApiModelProperty(value = "消息内容")
+    private Object msg ;
 
-    private String msg ;
+    @ApiModelProperty(value = "用户唯一标识")
+    private String username ;
 
-    private Long userId ;
-
-    public String getMsg() {
+    public Object getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public void setMsg(Object msg) {
         this.msg = msg;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
 }

@@ -1,7 +1,7 @@
 package com.github.surpassm.im.server.handler;
 
-import com.github.surpassm.im.server.core.ProtocolProcess;
-import com.github.surpassm.im.server.pojo.SessionStore;
+import com.github.surpassm.im.server.common.Overall;
+import com.github.surpassm.im.server.protocol.ProtocolProcess;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -14,8 +14,6 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Date;
 
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
@@ -35,22 +33,25 @@ public class ChatHandler extends SimpleChannelInboundHandler<Object> {
         this.protocolProcess = protocolProcess;
     }
 
+    /**
+     * 当客户端连接服务端（或者是打开连接之后）
+     */
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        //调用鉴权判断
-        String asLongText = ctx.channel().id().asLongText();
-        SessionStore store = new SessionStore(asLongText,ctx.channel(),true,null);
-        protocolProcess.store().put(asLongText,store);
     }
 
+    /**
+     * 客户端断开
+     */
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        protocolProcess.store().remove(ctx.channel().id().asLongText());
+        protocolProcess.disConnect().processDisConnect(ctx.channel().attr(Overall.key).get(),ctx.channel());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof FullHttpRequest) {
+            //以http请求形式接入，但是走的是websocket
             handleHttpRequest(ctx, (FullHttpRequest) msg);
         } else if (msg instanceof WebSocketFrame) {
             handlerWebSocketFrame(ctx, (WebSocketFrame) msg);
@@ -91,11 +92,11 @@ public class ChatHandler extends SimpleChannelInboundHandler<Object> {
         // 本例程仅支持文本消息，不支持二进制消息
         if (frame instanceof TextWebSocketFrame) {
             // 服务端收到消息
-            String request = ((TextWebSocketFrame) frame).text();
-            log.info("服务端收到：" + request);
-            TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + "：" + request);
-            // 返回【谁发的发给谁】
-            ctx.channel().writeAndFlush(tws);
+//            String request = ((TextWebSocketFrame) frame).text();
+//            log.info("服务端收到：" + request);
+//            TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString() + ctx.channel().id() + "：" + request);
+//            // 返回【谁发的发给谁】
+//            ctx.channel().writeAndFlush(tws);
         }
     }
 

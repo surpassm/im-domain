@@ -3,7 +3,10 @@
 package com.github.surpassm.im.server.service;
 
 
+
 import com.github.surpassm.im.server.pojo.SessionStore;
+
+import java.util.Map;
 
 /**
  * 会话存储服务接口
@@ -29,5 +32,8 @@ public interface ISessionStoreService {
 	 * 删除会话
 	 */
 	void remove(String clientId);
+
+	Map<String, SessionStore> getAll();
+
 
 }
